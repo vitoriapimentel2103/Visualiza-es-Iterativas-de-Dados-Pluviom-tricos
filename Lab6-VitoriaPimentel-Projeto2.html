@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lab6-VitoriaPimentel-Projeto2</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+</head>
+<body style="margin:0;padding:0;">
+  <div id="main" style="width: 100%;height:600px;"></div>
+  <script>
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+
+    var anos = [2016,2017,2018,2019,2020,2021,2022,2023,2024];
+    var variacao = [-91.7,-83.5,553.3,-266.9,93.4,-202.8,550.1,-473.0,-87.4];
+
+    var option = {
+      title: {
+        text: 'Variação da chuva acumulada por ano (2015 a 2024) - Fazenda Carnaúba - Taperoá - PB',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: function(params) {
+          return params[0].axisValue + ': ' + params[0].data + ' mm';
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: anos
+      },
+      yAxis: {
+        type: 'value',
+        name: 'Variação (mm)'
+      },
+      dataZoom: [
+        { type: 'slider', show: true, xAxisIndex: 0 },
+        { type: 'inside', xAxisIndex: 0 }
+      ],
+      visualMap: {
+        show: false,
+        pieces: [
+          { gt: 0, color: '#4a90e2' }, // positivo = azul
+          { lt: 0, color: '#e94e4e' }  // negativo = vermelho
+        ],
+        seriesIndex: 0
+      },
+      series: [
+        {
+          data: variacao,
+          type: 'bar'
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+  </script>
+</body>
+</html>
